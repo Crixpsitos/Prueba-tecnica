@@ -33,8 +33,8 @@ export const initialMovies: Movie[] = [
                 caption: "The Shawshank Redemption"
             }
         ],
-        createdAt: "2022-01-01T00:00:00.000Z",
-        updatedAt: "2022-01-01T00:00:00.000Z"
+        createdAt: "2022-01-02T00:00:00.000Z",
+        updatedAt: "2022-01-03T00:00:00.000Z"
     },
     {
         id: uuidv4(),
@@ -53,6 +53,10 @@ export const initialMovies: Movie[] = [
             {
                 id: uuidv4(),
                 name: "Thriller"
+            },
+            {
+                id: uuidv4(),
+                name: "Action"
             }
         ],
         images: [

@@ -2,6 +2,141 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --color-primary: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-500: #3b82f6;
+  --color-primary-300: #93c5fd;
+  --color-primary-600: #1e40af;
+  --color-secondary: #4b5563;
+  --color-secondary-700: #374151;
+  --color-secondary-500: #6b7280;
+  --color-secondary-300: #d1d5db;
+  --border-error-500: #991b1b;
+  --ring-error-500: #fca5a1;
+  --color-error-600: #7f1d1d;
+}
+
+/*
+  En v4, ya no defines .btn para ser aplicado.
+  Simplemente defines tus componentes directamente.
+*/
+/*
+@layer utilities {
+  .btn {
+    background-color: #e5e7eb;
+    color: #1f2937;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    outline: none;
+    border: none;
+  }
+}
+*/
+
+@layer components {
+  .btn-primary {
+    /* Combina las propiedades base del botón con las propiedades específicas de primary */
+    background-color: #e5e7eb;
+    color: #1f2937;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    outline: none;
+    border: none;
+
+    /* Propiedades específicas de primary (puedes usar @apply aquí si son utilidades de Tailwind) */
+    /* @apply bg-primary text-white hover:bg-blue-700 focus:ring-blue-500; */
+    /* O definirlas directamente si usas tus variables CSS */
+    background-color: var(--color-primary); /* Usando tu variable */
+    color: white;
+    &:hover {
+      background-color: #1d4ed8; /* O un color específico de hover */
+    }
+    &:focus {
+      box-shadow: 0 0 0 2px var(--color-primary); /* Ejemplo de focus ring */
+    }
+  }
+
+  .btn-secondary {
+    /* Combina las propiedades base del botón con las propiedades específicas de secondary */
+    background-color: #e5e7eb;
+    color: #1f2937;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    outline: none;
+    border: none;
+
+    /* Propiedades específicas de secondary */
+    /* @apply bg-secondary text-white hover:bg-secondary-700 focus:ring-secondary-500; */
+    background-color: var(--color-secondary); /* Usando tu variable */
+    color: white;
+    &:hover {
+      background-color: var(--color-secondary-700); /* Usando tu variable */
+    }
+    &:focus {
+      box-shadow: 0 0 0 2px var(--color-secondary-500); /* Usando tu variable */
+    }
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: #1f2937;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    outline: none;
+    border: none;
+
+    /* Propiedades específicas de ghost */
+    background-color: transparent;
+    color: var(--color-secondary);
+    &:hover {
+      background-color: var(--color-secondary-300); /* Usando tu variable */
+      color: white;
+    }
+
+    @variant dark {
+      background-color: var(--color-secondary-700);
+      color: white;
+      &:hover {
+        background-color: var(--color-secondary-500);
+        color: white;
+      }
+    }
+  }
+  .input {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border: 1px solid #d1d5db; /* border-gray-300 */
+    border-radius: 0.375rem;
+    outline: none;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    &:focus {
+      box-shadow: 0 0 0 2px var(--color-primary-500);
+      border-color: var(--color-primary-500);
+    }
+
+    @variant dark {
+      background-color: var(--color-secondary-700);
+      color: white;
+      border-color: var(--color-secondary-500);
+      &:focus {
+        box-shadow: 0 0 0 2px var(--color-primary-500);
+        border-color: var(--color-primary-500);
+      }
+    }
+  }
+}
 /* @reference tailwindcss/base;
 
 @layer base {
@@ -89,3 +224,46 @@
 
  
 } */
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+.scale-in {
+  animation: scaleIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

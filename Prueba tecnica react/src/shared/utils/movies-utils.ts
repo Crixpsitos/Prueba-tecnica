@@ -1,18 +1,24 @@
 import type { Movie, MovieFilter, MovieSortOption } from "@/interface/Movies";
 import Fuse from "fuse.js";
+import { startTransition } from "react";
 
 const searchFuse = (movies: Movie[]): Fuse<Movie> => {
   return new Fuse(movies, {
     keys: ["title", "description", "tags"],
-    threshold: 0.5,
+    threshold: 0.3,
     ignoreLocation: true,
   });
 };
 
 export const searchMovies = (movies: Movie[], search: string): Movie[] => {
   if (!search) return movies;
-  const fuse = searchFuse(movies);
-  return fuse.search(search).map((result) => result.item);
+
+  let searchResults: Movie[] = [];
+  startTransition(() => {
+    const fuse = searchFuse(movies);
+    searchResults = fuse.search(search).map((result) => result.item);
+  });
+  return searchResults;
 };
 
 export const filtereMovies = (
@@ -21,6 +27,7 @@ export const filtereMovies = (
 ): Movie[] => {
   const { search, releaseDate, tags } = filter;
   let filteredMovies = movies;
+
 
   if (search) {
     filteredMovies = searchMovies(filteredMovies, search);

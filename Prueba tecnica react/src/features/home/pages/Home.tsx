@@ -1,10 +1,11 @@
 import { useMovies } from "@/shared/hooks/useMovies";
 import { MovieList } from "../components/MovieList";
+import { MovieFilters } from "../components/MovieFilters";
 
 const Home = () => {
   const { movies } = useMovies();
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 w-screen">
       <div className="flex flex-col dark:text-white   md:flex-row md:items-center md:justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -16,6 +17,7 @@ const Home = () => {
           </p>
         </div>
       </div>
+      <MovieFilters />
       <MovieList />
     </div>
   );

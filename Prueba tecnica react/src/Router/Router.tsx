@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router";
 
 const Home = lazy(() => import("@/features/home/pages/Home"));
+const MovieDetail = lazy(() => import("@/features/movies/pages/MoviePage"));
 
 export const Router = () => {
   return (
@@ -13,9 +14,9 @@ export const Router = () => {
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="movies/:id" element={<h1>Movie</h1>} />
+            <Route path="movies/:id" element={<MovieDetail />} />
             <Route path="movies/add" element={<h1>Add Movie</h1>} />
-            <Route path="movies/:id/edit" element={<h1>Edit Movie</h1>} />
+            <Route path="movies/:id/edit" element={<MovieDetail />} />
             <Route path="*" element={<h1>404</h1>} />
           </Routes>
         </Suspense>

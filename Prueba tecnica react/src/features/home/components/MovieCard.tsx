@@ -108,7 +108,7 @@ export const MovieCard: FC<Props> = ({ movie }) => {
                             )}
                             <div className="flex items-center space-x-2 mt-2">
                                 <Link
-                                    to={`/task/${movie.id}/edit`}
+                                    to={`/movie/${movie.id}/edit`}
                                     className={`
                                         p-1.5
                                         ${isDark
@@ -120,7 +120,7 @@ export const MovieCard: FC<Props> = ({ movie }) => {
                                     <Edit className="size-4" />
                                 </Link>
                                 <Link
-                                    to={`/task/${movie.id}`}
+                                    to={`/movies/${movie.id}`}
                                     className={`
                                         p-1.5 inline-flex gap-2 rounded-full transition-colors
                                         ${isDark

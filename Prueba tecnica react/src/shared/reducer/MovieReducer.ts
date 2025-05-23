@@ -13,7 +13,6 @@ export const movieReducer = (
   switch (action.type) {
     case "LOAD_MOVIE":
       newMovies = loadInitalMovies();
-      console.log("newMovies", newMovies);
       saveMovies(newMovies);
       return {
         ...state,
@@ -60,9 +59,18 @@ export const movieReducer = (
       };
 
     case "UPDATE_MOVIE":
+  
       newMovies = state.movies.map((movie: Movie) =>
-        movie.id === action.payload.id ? action.payload : movie
+        movie.id === action.payload.id
+          ? {
+          ...movie,
+          ...action.payload,
+          createdAt: movie.createdAt,
+          updatedAt: new Date().toISOString(),
+        }
+          : movie
       );
+      saveMovies(newMovies);
       return {
         ...state,
         movies: newMovies,

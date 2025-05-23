@@ -33,7 +33,7 @@ export const MovieList = () => {
         description="Crea tus propias peliculas y empieza a disfrutar de la experiencia."
         action={
             <Link
-            to="/task/new"
+            to="/movies/new"
             className="flex items-center justify-center gap-2 px-4 py-2 rounded-md font-semibold transition-colors
               bg-gray-200 text-gray-800 hover:bg-gray-300
               dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"

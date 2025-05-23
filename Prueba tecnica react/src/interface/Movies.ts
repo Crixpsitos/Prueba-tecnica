@@ -27,25 +27,31 @@ export interface MovieContext {
   sort: MovieSortOption;
   addMovie: (movie: Omit<Movie, "id" | "createdAt" | "updatedAt">) => void;
   removeMovie: (id: string) => void;
-  updateMovie: (id: string, updatedMovie: Movie) => void;
+  updateMovie: (id: Movie["id"], updatedMovie: Omit<Movie, "id" | "createdAt">) => void;
   setFilter: (filter: MovieFilter) => void;
   setSort: (sort: MovieSortOption) => void;
   searchMovies: (search: string) => void;
-  getAllTag: () => string[];
+  getAllTag: () => MovieTag[];
   clearFilter: () => void;
   clearSort: () => void;
 }
 
 export type MovieActions =
   | { type: "LOAD_MOVIE" }
-  | { type: "ADD_MOVIE"; payload: Omit<Movie, "id" | "createdAt" | "updatedAt"> }
+  | {
+      type: "ADD_MOVIE";
+      payload: Omit<Movie, "id" | "createdAt" | "updatedAt">;
+    }
   | { type: "REMOVE_MOVIE"; payload: string }
-  | { type: "UPDATE_MOVIE"; payload: Movie }
+  | {
+      type: "UPDATE_MOVIE";
+      payload: Omit<Movie,"createdAt">;
+    }
   | { type: "SET_FILTER"; payload: MovieFilter }
   | { type: "SET_SORT"; payload: MovieSortOption }
   | { type: "SEARCH_MOVIES"; payload: string }
   | { type: "CLEAR_FILTER" }
-  | { type: "CLEAR_SORT" }
+  | { type: "CLEAR_SORT" };
 
 export interface MovieFilter {
   search: string;
@@ -53,13 +59,12 @@ export interface MovieFilter {
   tags: string[];
 }
 
-export type SortOption = 'priority' | 'releaseDate' | 'title' | 'createdAt';
-export type SortOrder = 'asc' | 'desc';
+export type SortOption = "releaseDate" | "title" | "createdAt";
+export type SortOrder = "asc" | "desc";
 export interface MovieSortOption {
   field: SortOption;
   order: SortOrder;
 }
-
 
 export interface MovieState {
   movies: Movie[];
