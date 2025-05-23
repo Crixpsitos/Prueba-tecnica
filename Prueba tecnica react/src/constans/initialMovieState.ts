@@ -1,8 +1,8 @@
-export const initialMovieState = {
+import type { MovieState } from "@/interface/Movies";
+
+export const initialMovieState: MovieState = {
     movies: [],
-    loading: false,
-    error: null,
-    filters: {
+    filter: {
         tags: [],
         search: "",
         releaseDate: "" // filtrar por año
@@ -10,6 +10,6 @@ export const initialMovieState = {
     sort: {
         order: "asc",
         field: "title",
-    }
-    
+    },
+    filteredMovies: []
 }
