@@ -15,7 +15,7 @@ export const Router = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="movies/:id" element={<MovieDetail />} />
-            <Route path="movies/add" element={<h1>Add Movie</h1>} />
+            <Route path="movies/add" element={<MovieDetail />} />
             <Route path="movies/:id/edit" element={<MovieDetail />} />
             <Route path="*" element={<h1>404</h1>} />
           </Routes>

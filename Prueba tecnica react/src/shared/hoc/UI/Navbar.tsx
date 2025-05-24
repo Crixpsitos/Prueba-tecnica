@@ -23,7 +23,7 @@ export const Navbar = () => {
       </div>
       <div className="flex items-center space-x-4">
         <button
-          onClick={() => navigate("/add")}
+          onClick={() => navigate("/movies/add")}
           className="p-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
         >
           Add Movie

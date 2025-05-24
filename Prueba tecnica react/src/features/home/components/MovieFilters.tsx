@@ -1,6 +1,6 @@
 import type { MovieSortOption } from "@/interface/Movies";
 import { useMovies } from "@/shared/hooks/useMovies";
-import { ArrowUpDown, Filter, Search } from "lucide-react";
+import { ArrowUp, ArrowUpDown, Filter, Search } from "lucide-react";
 import { useState, useMemo, useCallback } from "react";
 import DatePicker from "react-datepicker";
 
@@ -65,8 +65,8 @@ export const MovieFilters = () => {
             />
           </div>
         </div>
-        <div className="flex items-center justify-between my-5">
-          <div className="flex items-center space-x-2">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between my-5">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               className={`flex items-center ${
                 showFilters ? "btn-primary" : "btn-secondary"
@@ -90,50 +90,51 @@ export const MovieFilters = () => {
               </button>
             )}
           </div>
-          <div className="flex items-center space-x-2 flex-wrap">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
             <span className="text-sm text-gray-500 dark:text-gray-300">
               Ordenar por:
             </span>
-
-            <button
-              className={`btn-ghost text-sm flex gap-2 items-center ${
-                sort.field === "title" ? "text-primary-600" : ""
-              }`}
-              onClick={() => hanldeSortChange("title")}
-            >
-              <ArrowUpDown
-                className={`size-3 ml-1 ${
-                  sort.order === "asc" ? "rotate-0" : "rotate-180"
+            <div className="flex flex-wrap gap-2">
+              <button
+                className={`btn-ghost text-sm flex gap-2 items-center ${
+                  sort.field === "title" ? "text-primary-600" : ""
                 }`}
-              />
-              Titulo
-            </button>
-            <button
-              className={`btn-ghost text-sm flex gap-2 items-center ${
-                sort.field === "releaseDate" ? "text-primary-600" : ""
-              }`}
-              onClick={() => hanldeSortChange("releaseDate")}
-            >
-              <ArrowUpDown
-                className={`size-3 ml-1 ${
-                  sort.order === "asc" ? "rotate-0" : "rotate-180"
+                onClick={() => hanldeSortChange("title")}
+              >
+                <ArrowUp
+                  className={`size-3 ml-1 ${
+                    sort.order === "asc" ? "rotate-0" : "rotate-180"
+                  }`}
+                />
+                Titulo
+              </button>
+              <button
+                className={`btn-ghost text-sm flex gap-2 items-center ${
+                  sort.field === "releaseDate" ? "text-primary-600" : ""
                 }`}
-              />
-              Fecha de lanzamiento
-            </button>
-            <button
-              className={`btn-ghost text-sm flex gap-2 items-center ${
-                sort.field === "createdAt" ? "text-primary-600" : ""
-              }`}
-              onClick={() => hanldeSortChange("createdAt")}
-            >
-              <ArrowUpDown
-                className={`size-3 ml-1 ${
-                  sort.order === "asc" ? "rotate-0" : "rotate-180"
+                onClick={() => hanldeSortChange("releaseDate")}
+              >
+                <ArrowUpDown
+                  className={`size-3 ml-1 ${
+                    sort.order === "asc" ? "rotate-0" : "rotate-180"
+                  }`}
+                />
+                Fecha de lanzamiento
+              </button>
+              <button
+                className={`btn-ghost text-sm flex gap-2 items-center ${
+                  sort.field === "createdAt" ? "text-primary-600" : ""
                 }`}
-              />
-              Fecha de creación
-            </button>
+                onClick={() => hanldeSortChange("createdAt")}
+              >
+                <ArrowUpDown
+                  className={`size-3 ml-1 ${
+                    sort.order === "asc" ? "rotate-0" : "rotate-180"
+                  }`}
+                />
+                Fecha de creación
+              </button>
+            </div>
           </div>
         </div>
         {showFilters && (

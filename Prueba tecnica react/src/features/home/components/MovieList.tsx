@@ -52,6 +52,7 @@ export const MovieList = () => {
 
   return (
     <div className="grid gird-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      
       {filteredMovies.map((movie) => (
         <MovieCard key={movie.id} movie={movie} />
       ))}

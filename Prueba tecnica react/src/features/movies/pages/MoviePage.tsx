@@ -25,7 +25,7 @@ const MovieDetail = () => {
 
   if (!movie && !isNew) {
     return (
-      <div className="container mx-auto px-4 py-8 w-screen">
+      <div className="container mx-auto px-4 py-8  dark:bg-gray-900 min-h-screen">
         <EmptyMovies
           title="Pelicula no encontrado"
           description="No se ha encontrado la pelicula que buscas."
@@ -41,7 +41,7 @@ const MovieDetail = () => {
 
   if (isNew || isEdit) {
     return (
-      <div className="container mx-auto px-4 py-8 w-screen">
+      <div className="container mx-auto px-4 py-8  dark:bg-gray-900 min-h-screen">
         <div className="mb-6">
           <button
             onClick={handleBack}
@@ -62,21 +62,20 @@ const MovieDetail = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 dark:bg-gray-900 min-h-screen">
       <button
         onClick={handleBack}
-        className="flex items-center text-gray-600 hover:text-gray-900 mb-6"
+        className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-6"
       >
         <ArrowLeft className="w-5 h-5 mr-2" />
         Volver a películas
       </button>
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold mb-2">{movie?.title}</h1>
-          <div className="flex items-center gap-3 text-gray-600">
+          <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">{movie?.title}</h1>
+          <div className="flex items-center gap-3 text-gray-600 dark:text-gray-300">
             <div className="flex items-center">
-              {/* Puedes poner aquí un icono si quieres, por ejemplo un reloj para la fecha */}
               <span className="mr-1">Fecha de estreno:</span>
               {movie?.releaseDate}
             </div>
@@ -85,12 +84,12 @@ const MovieDetail = () => {
 
         {movies && movie?.images?.length && movie.images.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-sm font-medium text-gray-700 mb-2">Imágenes</h3>
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Imágenes</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {movie.images.map((image) => (
                 <div
                   key={image.id}
-                  className="aspect-video rounded-lg overflow-hidden border border-gray-200"
+                  className="aspect-video rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"
                 >
                   <img
                     src={image.imageUrl}
@@ -103,8 +102,8 @@ const MovieDetail = () => {
           </div>
         )}
 
-        <div className="prose max-w-none mb-6">
-          <p className="text-gray-700 whitespace-pre-wrap">{movie?.description}</p>
+        <div className="prose max-w-none mb-6 text-gray-700 dark:text-gray-200">
+          <p className="whitespace-pre-wrap">{movie?.description}</p>
         </div>
 
         <div className="flex justify-end">

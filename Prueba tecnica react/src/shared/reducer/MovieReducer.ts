@@ -32,6 +32,7 @@ export const movieReducer = (
         updatedAt: new Date().toISOString(),
       };
       newMovies = [...state.movies, newMovie];
+      saveMovies(newMovies);
       return {
         ...state,
         movies: newMovies,

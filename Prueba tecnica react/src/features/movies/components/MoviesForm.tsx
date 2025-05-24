@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
   type FC,
+  type FormEvent,
   type KeyboardEvent,
 } from "react";
 import DatePicker from "react-datepicker";
@@ -41,34 +42,33 @@ const MoviesForm: FC<Props> = ({ initialMovie, isEditing = false }) => {
   const [newTags, setNewTags] = useState("");
 
   const allTags = getAllTag();
+const validateForm = useCallback(() => {
+  const errors = {
+    title: "",
+    description: "",
+    releaseDate: "",
+    images: "",
+  };
 
-  const validateForm = useCallback(() => {
-    const errors: {
-      title: string;
-      description: string;
-      releaseDate: string;
-      images: string;
-    } = {
-      title: "",
-      description: "",
-      releaseDate: "",
-      images: "",
-    };
-    if (!form.title) {
-      errors.title = "El título es requerido";
-    }
-    if (!form.description) {
-      errors.description = "La descripción es requerida";
-    }
-    if (!form.releaseDate) {
-      errors.releaseDate = "La fecha de lanzamiento es requerida";
-    }
-    if (form.images.length === 0) {
-      errors.images = "Por favor selecciona al menos una imagen";
-    }
-    setError(errors);
-    return Object.keys(errors).length === 0;
-  }, [form.description, form.images.length, form.releaseDate, form.title]);
+  if (!form.title) {
+    errors.title = "El título es requerido";
+  }
+  if (!form.description) {
+    errors.description = "La descripción es requerida";
+  }
+  if (!form.releaseDate) {
+    errors.releaseDate = "La fecha de lanzamiento es requerida";
+  }
+  if (form.images.length === 0) {
+    errors.images = "Por favor selecciona al menos una imagen";
+  }
+
+  setError(errors);
+
+
+  const isValid = Object.values(errors).every((value) => value === "");
+  return isValid;
+}, [form.description, form.images.length, form.releaseDate, form.title]);
 
   const onChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -170,8 +170,11 @@ const MoviesForm: FC<Props> = ({ initialMovie, isEditing = false }) => {
 
   const { title, description, images, releaseDate, tags } = form;
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     if (!validateForm()) {
+      console.log("Error en el formulario");
       return;
     }
 
@@ -251,7 +254,7 @@ const MoviesForm: FC<Props> = ({ initialMovie, isEditing = false }) => {
             error?.title
               ? "border-error-500 focus:ring-error-500 focus:border-error-500"
               : ""
-          } `}
+          }`}
           value={title}
           onChange={onChange}
           placeholder="Título de la película"
@@ -274,7 +277,7 @@ const MoviesForm: FC<Props> = ({ initialMovie, isEditing = false }) => {
             error?.description
               ? "border-error-500 focus:ring-error-500 focus:border-error-500"
               : ""
-          } `}
+          }`}
           value={description}
           onChange={onChange}
           placeholder="Descripción de la película"
@@ -301,6 +304,17 @@ const MoviesForm: FC<Props> = ({ initialMovie, isEditing = false }) => {
           }}
           showYearPicker
           dateFormat="yyyy/MM/dd"
+          customInput={
+            <input
+              className={`input w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all ${
+                error?.releaseDate
+                  ? "border-error-500 focus:ring-error-500 focus:border-error-500"
+                  : ""
+              }`}
+              placeholder="Selecciona la fecha"
+              readOnly
+            />
+          }
         />
         {error?.releaseDate && (
           <p className="text-sm text-error-600 mt-1">{error.releaseDate}</p>
@@ -313,11 +327,11 @@ const MoviesForm: FC<Props> = ({ initialMovie, isEditing = false }) => {
         >
           Tags
         </label>
-        <div className="flex items-center gap-2 mb-2">
+        <div className="flex items-center gap-2 mb-2 flex-wrap">
           {tags.map((tag) => (
             <span
               key={tag.id}
-              className="inline-flex items-center px-3 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-100"
+              className="inline-flex items-center px-3 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-100 mb-1"
             >
               {tag.name}
               <button
@@ -335,7 +349,7 @@ const MoviesForm: FC<Props> = ({ initialMovie, isEditing = false }) => {
             type="text"
             name="tags"
             id="tags"
-            className={`input `}
+            className="input w-full rounded-l-md"
             value={newTags}
             onChange={(e) => setNewTags(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -345,7 +359,7 @@ const MoviesForm: FC<Props> = ({ initialMovie, isEditing = false }) => {
           <button
             type="button"
             onClick={handleAddTag}
-            className="px-4 py-2 bg-primary-600 text-white rounded-r-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-primary-500 dark:hover:bg-primary-600 dark:focus:ring-primary-400"
+            className="px-4 py-2 bg-primary-600 text-white rounded-r-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-primary-500 dark:hover:bg-primary-600 dark:focus:ring-primary-400 transition-all"
           >
             <Plus className="size-5" />
           </button>
@@ -369,11 +383,11 @@ const MoviesForm: FC<Props> = ({ initialMovie, isEditing = false }) => {
               Imágenes
             </label>
             <button
-              className="btn-secondary"
+              className="btn-secondary flex items-center gap-2 px-4 py-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
               type="button"
               onClick={() => fileInputRef.current?.click()}
             >
-              <ImagePlus className="size-5 mr-2" />
+              <ImagePlus className="size-5" />
               Seleccionar imágenes
             </button>
             <input
@@ -403,6 +417,7 @@ const MoviesForm: FC<Props> = ({ initialMovie, isEditing = false }) => {
                     className="object-cover w-full h-full"
                   />
                   <button
+                    type="button"
                     onClick={() => handleRemoveImage(image.id)}
                     className="absolute top-2 right-2 p-1 bg-white dark:bg-gray-800 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
                   >
@@ -423,6 +438,14 @@ const MoviesForm: FC<Props> = ({ initialMovie, isEditing = false }) => {
             ))}
           </div>
         </div>
+      </div>
+      <div className="flex justify-end">
+        <button
+          type="submit"
+          className="px-6 py-2 rounded bg-primary-600 text-white font-semibold hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-primary-500 dark:hover:bg-primary-600 dark:focus:ring-primary-400 transition-all"
+        >
+          {isEditing ? "Guardar cambios" : "Guardar película"}
+        </button>
       </div>
     </form>
   );
